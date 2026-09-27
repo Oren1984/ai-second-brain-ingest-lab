@@ -1,0 +1,17 @@
+{
+  "reviewer": "demo reviewer (pre-recorded decisions file, not typed live)",
+  "decisions": {
+    "c1": {"decision": "approve", "note": "Correct reading: narrow the conclusion, keep the gate, flag for review."},
+    "c2": {"decision": "approve", "note": "Distinct concept; worth its own page."},
+    "c3": {"decision": "approve", "note": ""},
+    "c4": {
+      "decision": "approve",
+      "note": "Edited: one fictional incident does not justify banning RAG for policy questions.",
+      "edit": {
+        "find": "RAG should not be used for high-stakes policy questions; route them to a human instead.",
+        "replace": "For high-stakes questions, add a correctness check against reference answers\n(see [[faithfulness-evaluation]])."
+      }
+    },
+    "c5": {"decision": "reject", "note": "Misreads the source: the judge scored faithfulness correctly. The gap was freshness, covered by c1 and c2."}
+  }
+}

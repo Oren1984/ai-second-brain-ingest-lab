@@ -1,0 +1,83 @@
+WEBVTT
+
+NOTE Captions for the replay of the recorded demo run. Also burned into the video.
+
+1
+00:00:00.200 --> 00:00:03.600
+A replay of a recorded mock run of the ingest pipeline.
+
+2
+00:00:03.800 --> 00:00:07.300
+A small wiki learns from one new source, but only with a human's approval.
+
+3
+00:00:07.700 --> 00:00:10.700
+The wiki starts with five linked pages about evaluating RAG systems.
+
+4
+00:00:10.900 --> 00:00:14.300
+One page concludes that a high faithfulness score means the answer is correct.
+
+5
+00:00:14.700 --> 00:00:16.900
+A new source arrives: a fictional incident review.
+
+6
+00:00:17.100 --> 00:00:19.700
+An answer scored high on faithfulness, yet it relied on a superseded policy.
+
+7
+00:00:19.900 --> 00:00:22.800
+A hidden instruction to AI assistants is flagged and treated as data.
+
+8
+00:00:23.200 --> 00:00:26.400
+The ingest compares the source with the wiki and stages five proposed changes.
+
+9
+00:00:26.600 --> 00:00:30.800
+In this run the proposal is a hand-authored fixture, not live model output. Nothing is written yet.
+
+10
+00:00:31.200 --> 00:00:34.600
+A human decides each change. Here the decisions are replayed from a pre-recorded file.
+
+11
+00:00:34.800 --> 00:00:38.000
+Three approved as proposed; one misreading rejected, so it never reaches the wiki.
+
+12
+00:00:38.200 --> 00:00:42.300
+One overreach is corrected by the reviewer, then approved.
+
+13
+00:00:42.700 --> 00:00:46.500
+The existing conclusion is narrowed, not silently overwritten.
+
+14
+00:00:46.700 --> 00:00:51.800
+Faithfulness becomes necessary but not sufficient, and the page is flagged for review.
+
+15
+00:00:52.200 --> 00:00:56.200
+The graph shows the effect: two new pages, revised pages and new links.
+
+16
+00:00:56.400 --> 00:01:00.300
+Seven pages and 25 links, up from five and 15.
+
+17
+00:01:00.700 --> 00:01:03.900
+Validation passes with one warning: the revised page needs review.
+
+18
+00:01:04.100 --> 00:01:06.300
+An append-only log records what was approved and what was rejected.
+
+19
+00:01:06.500 --> 00:01:09.300
+Ingesting the same source again changes nothing.
+
+20
+00:01:09.800 --> 00:01:15.800
+The same review and apply path serves a live Claude run. This replay shows the recorded mock run.

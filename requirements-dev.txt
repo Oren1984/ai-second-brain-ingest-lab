@@ -1,0 +1,3 @@
+pytest>=8
+# Only for rendering the replay video (tools/make_replay_video.py).
+pillow>=10

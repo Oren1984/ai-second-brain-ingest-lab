@@ -1,0 +1,8 @@
+# Normalise text to LF so hashes and diffs are stable across Windows/Unix.
+* text=auto eol=lf
+*.ps1 text eol=crlf
+# Raw sources are immutable evidence: never let Git rewrite their bytes.
+**/raw/** -text
+examples/scenario/incoming/** -text
+*.webm binary
+*.png binary

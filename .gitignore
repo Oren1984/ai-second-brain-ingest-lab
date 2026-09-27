@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.env
+# Personal workspaces created with `python -m brain init` (keep your own brain out of this repo)
+workspace/
+llm-trial/
+# Downloaded third-party source media (not redistributed standalone)
+.cache/

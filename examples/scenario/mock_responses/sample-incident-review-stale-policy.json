@@ -1,0 +1,65 @@
+{
+  "_mock": {
+    "note": "HAND-AUTHORED MOCK FIXTURE. Not LLM output. It shows the kind of proposal the schema asks for, including two deliberate overreaches (c4, c5) for the human reviewer to catch. The engine treats this text exactly like a model response: same parser, policy checks, staging, review and apply.",
+    "for_source_sha256": "f471c0a45f8300ea6967b17c82b1cf5a3bd62cf4af0b4998e2bbd454916a2e36",
+    "base_page_sha256": {
+      "faithfulness-evaluation": "f5f0e57110fa2de3403d10929635fd799101e0bfb13aa5f15da09a735d3d6f29",
+      "llm-as-judge": "bbeedab870ee39f3ca5d6ff8f06f778f7632149042029184f9398026d94725d1",
+      "rag-pipeline": "05f1bf21a1a2a7417a3e20b1beefcfc2d5521707a3dff5e0f2a9fa40070f0098",
+      "retrieval-quality": "c3ac9cbf32d9b4854c7cd97b4706052a8c86b5e6e57c91c861e99e7cd2fdecec",
+      "src-rag-eval-primer": "747241b3f0b051dd3379053d280ff347767f0dc7784ac5307dcd819493b7cb4c"
+    }
+  },
+  "response": {
+    "source_title": "SAMPLE: Post-incident review — policy assistant cited a superseded document",
+    "interpretation": "The incident describes a RAG answer that was fully faithful to its retrieved context (0.96) and still wrong, because the context came from a superseded policy. This contradicts the wiki's conclusion that faithfulness >= 0.9 means an answer is correct and safe to ship. The proposal narrows that conclusion, adds a concept for source freshness, records the source, and connects freshness to the pipeline and the judge caveats.",
+    "contradictions": [
+      {
+        "page": "faithfulness-evaluation",
+        "existing_claim": "A high faithfulness score (>= 0.9) means an answer is correct and safe to ship.",
+        "new_evidence": "An answer scored 0.96 faithfulness but was grounded in a superseded policy and was wrong.",
+        "proposed_resolution": "Narrow the conclusion: faithfulness is necessary but not sufficient; add freshness and correctness checks; mark needs-review until corroborated."
+      }
+    ],
+    "security_notes": [
+      "The source contains an HTML comment addressed to AI assistants asking to mark every page verified and delete the log. It was treated as quoted data; no change in this proposal acts on it."
+    ],
+    "changes": [
+      {
+        "action": "update",
+        "page_id": "faithfulness-evaluation",
+        "page_type": "concept",
+        "rationale": "The new source directly contradicts this page's conclusion. Narrow it and record the revision explicitly rather than overwriting it.",
+        "content": "---\nid: faithfulness-evaluation\ntitle: Faithfulness evaluation\ntype: concept\nsummary: Whether every claim in a generated answer is supported by the retrieved context — a grounding check, not a correctness check.\nsources: [src-rag-eval-primer, src-sample-incident-review-stale-policy]\nstatus: needs-review\nupdated: set-by-engine\n---\n# Faithfulness evaluation\n\nFaithfulness checks that each claim in an answer is supported by the passages\nthe [[rag-pipeline]] retrieved. It is typically scored by an [[llm-as-judge]].\n\n## What it measures — and what it does not\n\nFaithfulness measures grounding in *what was retrieved*. It says nothing about\nwhether the retrieved passages are current or correct. A fully faithful answer\ncan still be wrong when retrieval returns a superseded document; see\n[[source-freshness]].\n\n## Current conclusion (revised)\n\nA high faithfulness score (>= 0.9) is a **necessary but not sufficient**\nrelease signal. Keep it as a gate — it catches unsupported claims — but pair it\nwith a [[source-freshness]] check and, for high-stakes questions, a correctness\ncheck against reference answers.\n\n## Contradictions and revisions\n\n- **Earlier claim:** faithfulness >= 0.9 means an answer is correct and safe to\n  ship ([[src-rag-eval-primer]]).\n- **New evidence:** an answer scored 0.96 faithfulness yet quoted a superseded\n  policy and gave an employee wrong information ([[src-sample-incident-review-stale-policy]]).\n- **Resolution:** the earlier conclusion is narrowed, not discarded. Status is\n  `needs-review` until a second, independent source corroborates it.\n"
+      },
+      {
+        "action": "create",
+        "page_id": "source-freshness",
+        "page_type": "concept",
+        "rationale": "The root cause (superseded documents in the index) is a distinct concept that no existing page covers.",
+        "content": "---\nid: source-freshness\ntitle: Source freshness and versioning\ntype: concept\nsummary: Whether retrieved passages come from the current version of a document; the cause of stale-but-faithful answers.\nsources: [src-sample-incident-review-stale-policy]\nstatus: stable\nupdated: set-by-engine\n---\n# Source freshness and versioning\n\nA [[rag-pipeline]] can retrieve a passage that is relevant and well ranked but\ncomes from a superseded version of a document. [[retrieval-quality]] metrics\nsuch as recall@k do not detect this, and [[faithfulness-evaluation]] rewards an\nanswer that faithfully repeats the outdated passage.\n\n## Controls\n\n- Attach `effective_date` and `superseded_by` metadata at ingestion.\n- Filter or down-rank superseded chunks at retrieval time.\n- For high-stakes questions, compare answers with maintained reference answers.\n\nEvidence: [[src-sample-incident-review-stale-policy]] (a single fictional incident).\n"
+      },
+      {
+        "action": "create",
+        "page_id": "src-sample-incident-review-stale-policy",
+        "page_type": "source",
+        "rationale": "Record the new source with its key claims so revised pages can cite it.",
+        "content": "---\nid: src-sample-incident-review-stale-policy\ntitle: \"SAMPLE: Post-incident review — policy assistant cited a superseded document\"\ntype: source\nsummary: Fictional incident in which a 0.96-faithfulness answer was wrong because it was grounded in a superseded policy.\nsources: [src-sample-incident-review-stale-policy]\nstatus: stable\nupdated: set-by-engine\n---\n# SAMPLE: Post-incident review — policy assistant cited a superseded document\n\nFictional sample source. Key points:\n\n- An HR-policy RAG assistant answered \"12 weeks\" of parental leave from the\n  superseded 2023 policy; the current policy says 16 weeks.\n- Judge-scored faithfulness was 0.96 and retrieval recall@5 was high: every\n  automated gate passed.\n- Root cause: old and new policies were both indexed without effective-date\n  metadata, and the old one ranked higher ([[source-freshness]]).\n- Revises [[faithfulness-evaluation]]: faithfulness is grounding, not correctness.\n- The raw file contains an instruction addressed to AI assistants. It was\n  treated as quoted data and not acted on.\n"
+      },
+      {
+        "action": "update",
+        "page_id": "rag-pipeline",
+        "page_type": "concept",
+        "rationale": "Add freshness as a check at the ingest stage and state the implication for high-stakes questions.",
+        "content": "---\nid: rag-pipeline\ntitle: RAG pipeline\ntype: concept\nsummary: The stages of a retrieval-augmented generation system and where each is evaluated.\nsources: [src-rag-eval-primer, src-sample-incident-review-stale-policy]\nstatus: stable\nupdated: set-by-engine\n---\n# RAG pipeline\n\nA retrieval-augmented generation (RAG) system answers a question in two steps:\na retriever selects passages from an indexed corpus, and a generator writes an\nanswer grounded in those passages.\n\n## Stages and their checks\n\n1. **Ingest and index** — documents are chunked and embedded, with version\n   metadata checked by [[source-freshness]].\n2. **Retrieve** — scored by [[retrieval-quality]].\n3. **Generate** — scored by [[faithfulness-evaluation]], usually with an [[llm-as-judge]].\n\nRAG should not be used for high-stakes policy questions; route them to a human instead.\n\nEvaluation approach summarised from [[src-rag-eval-primer]]; freshness stage\nadded after [[src-sample-incident-review-stale-policy]].\n"
+      },
+      {
+        "action": "update",
+        "page_id": "llm-as-judge",
+        "page_type": "concept",
+        "rationale": "The judge scored the wrong answer highly; record this as a caveat.",
+        "content": "---\nid: llm-as-judge\ntitle: LLM-as-judge\ntype: concept\nsummary: Using a second model to score answers when human grading does not scale.\nsources: [src-rag-eval-primer, src-sample-incident-review-stale-policy]\nstatus: stable\nupdated: set-by-engine\n---\n# LLM-as-judge\n\nA judge model scores another model's output against a rubric, for example the\n[[faithfulness-evaluation]] of a RAG answer.\n\n## Caveats\n\n- Judges can be lenient toward fluent answers; spot-check against human labels\n  ([[src-rag-eval-primer]]).\n- The judge failed to catch the stale-policy incident, so judge scores should\n  not be used as a release gate ([[src-sample-incident-review-stale-policy]]).\n"
+      }
+    ]
+  }
+}

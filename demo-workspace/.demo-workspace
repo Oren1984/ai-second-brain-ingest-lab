@@ -1,0 +1,7 @@
+{
+  "created_by": "tools/demo.py run",
+  "purpose": "Disposable demo workspace. `tools/demo.py run` may delete and recreate it.",
+  "run_ids": [
+    "20260927T125935Z-mock-f471c0"
+  ]
+}

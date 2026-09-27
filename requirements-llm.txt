@@ -1,0 +1,2 @@
+# Only needed for `--mode llm` (genuine Claude run). Mock mode needs no packages.
+anthropic>=0.70

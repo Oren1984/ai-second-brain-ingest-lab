@@ -1,0 +1,119 @@
+{
+  "method": "replay rendered with Pillow from site/data/demo-run.js (generated from demo-workspace/); encoded with ffmpeg (VP8/WebM). Not a screen recording.",
+  "run_id": "20260927T125935Z-mock-f471c0",
+  "mode": "mock",
+  "proposal_origin": "hand-authored mock fixture",
+  "reviewer": "demo reviewer (pre-recorded decisions file, not typed live)",
+  "captions": {
+    "burned_in": true,
+    "vtt": "demo-replay.en.vtt",
+    "cues": 20
+  },
+  "audio": {
+    "track": {
+      "title": "Clean Soul",
+      "artist": "Kevin MacLeod",
+      "publisher": "incompetech.com",
+      "isrc": "USUAN1300033",
+      "source_url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Clean%20Soul.mp3",
+      "source_sha256": "458868c225cf8f6dbaf17300aa2e0839386991be8581d0218554699297d7581c",
+      "license": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "Clean Soul Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/",
+      "changes": "Excerpt from the start of the track, trimmed to the video length, volume lowered, fade-in and fade-out added, re-encoded to Opus.",
+      "details": "docs/music-license.md"
+    },
+    "codec": "opus",
+    "bitrate_kbps": 128,
+    "sample_rate": 48000,
+    "channels": 2,
+    "mix": {
+      "target_rms_dbfs": -23,
+      "peak_ceiling_dbfs": -6,
+      "fade_in_s": 3,
+      "fade_out_s": 5,
+      "start_offset_s": 0,
+      "opus_kbps": 128,
+      "gain_db": 7.2,
+      "source_segment": {
+        "peak_dbfs": -13.2,
+        "rms_dbfs": -30.3
+      },
+      "mixed_body": {
+        "peak_dbfs": -6,
+        "rms_dbfs": -23.4
+      },
+      "edges": {
+        "first_100ms": -180,
+        "last_100ms": -73.6
+      }
+    },
+    "encoded_with": "Chrome Web Audio + MediaRecorder; muxed with ffmpeg stream copy (video stream unchanged)"
+  },
+  "audio_note": "Background music only; no narration. Credit: Clean Soul Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/",
+  "source_data_sha256": "ec75b729dcdfeeb645286e9f41c28a85e64f4a723de5dc7c62811d008b835a29",
+  "sha256": "de0d7002e8a713bf4fcda0f9b5136ea21f822f435e8cab89db3c4cd123979168",
+  "fps": 30,
+  "frames": 2280,
+  "duration_s": 76,
+  "size": [
+    1280,
+    720
+  ],
+  "scenes": [
+    {
+      "key": "intro",
+      "stage": "Knowledge",
+      "start_s": 0,
+      "seconds": 7.5
+    },
+    {
+      "key": "before",
+      "stage": "Knowledge",
+      "start_s": 7.5,
+      "seconds": 7
+    },
+    {
+      "key": "source",
+      "stage": "Source",
+      "start_s": 14.5,
+      "seconds": 8.5
+    },
+    {
+      "key": "proposal",
+      "stage": "Proposal",
+      "start_s": 23,
+      "seconds": 8
+    },
+    {
+      "key": "review",
+      "stage": "Human review",
+      "start_s": 31,
+      "seconds": 11.5
+    },
+    {
+      "key": "revision",
+      "stage": "Revision",
+      "start_s": 42.5,
+      "seconds": 9.5
+    },
+    {
+      "key": "graph",
+      "stage": "Graph",
+      "start_s": 52,
+      "seconds": 8.5
+    },
+    {
+      "key": "audit",
+      "stage": "Audit",
+      "start_s": 60.5,
+      "seconds": 9
+    },
+    {
+      "key": "outro",
+      "stage": "Audit",
+      "start_s": 69.5,
+      "seconds": 6.5
+    }
+  ]
+}

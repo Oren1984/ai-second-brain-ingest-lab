@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Second Brain Ingest Lab</title>
+<meta name="description" content="A human-guided ingest into a Markdown second brain: one source, one contradiction, one human decision per change — shown from a recorded mock run.">
+<meta name="theme-color" content="#08111F">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2308111F'/%3E%3Cpath d='M10 20L16 9L23 17M10 20L23 17' stroke='%2333507A' stroke-width='1.6' fill='none'/%3E%3Ccircle cx='10' cy='20' r='3' fill='%238B5CF6'/%3E%3Ccircle cx='16' cy='9' r='3' fill='%2322D3EE'/%3E%3Ccircle cx='23' cy='17' r='3' fill='%233B82F6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Web fonts load without blocking rendering or scripts; offline, the system-font fallbacks apply. -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<noscript><p class="wrap">This page renders the recorded run from <code>data/demo-run.js</code> and needs JavaScript.</p></noscript>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="#top" aria-label="Second Brain Ingest Lab — top of page">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M10 20L16 9L23 17M10 20L23 17" stroke="currentColor" stroke-width="1.6" fill="none" opacity=".5"/><circle cx="10" cy="20" r="3" fill="#8B5CF6"/><circle cx="16" cy="9" r="3" fill="#22D3EE"/><circle cx="23" cy="17" r="3" fill="#3B82F6"/></svg>
+      Second Brain Ingest Lab
+    </a>
+    <nav class="toplinks" aria-label="Sections">
+      <a href="#flow">Flow</a><a href="#review">Review</a><a href="#before-after">Revision</a><a href="#graph">Graph</a><a href="#audit">Audit</a><a href="#video">Video</a><a href="#contact">Contact</a>
+    </nav>
+    <a class="mode-pill" id="mode-pill" href="#whats-real">MOCK RUN</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">AI systems engineering · human-in-the-loop knowledge</p>
+        <h1>A second brain that <span class="grad">asks before it learns.</span></h1>
+        <p class="lede">A new source arrives. The ingest reads it against what the wiki already believes, spots a contradiction and proposes page changes. A human approves, edits or rejects each one — only then does the knowledge change, with links, an index and an audit trail.</p>
+        <div class="disclosure" id="disclosure"></div>
+        <div class="cta">
+          <a class="btn primary" href="#video">Watch the replay</a>
+          <a class="btn" href="#flow">Follow the flow</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <canvas id="hero-canvas"></canvas>
+        <p class="hero-caption" id="hero-caption"></p>
+      </div>
+    </div>
+    <div class="wrap">
+      <dl class="stats" id="stats"></dl>
+    </div>
+  </section>
+
+  <section class="section" id="video" aria-labelledby="video-h">
+    <div class="wrap">
+      <p class="kicker">Replay</p>
+      <h2 id="video-h">The run, replayed</h2>
+      <p class="section-lede" id="video-lede"></p>
+      <div class="video-frame">
+        <video id="replay" controls preload="metadata" poster="media/demo-replay-poster.png" aria-describedby="video-lede">
+          <source src="media/demo-replay.webm" type="video/webm">
+          Your browser cannot play WebM video. <a href="media/demo-replay.webm">Download the replay</a>.
+        </video>
+      </div>
+      <p class="music-credit" id="music-credit"></p>
+      <details class="transcript">
+        <summary>Captions as text <span>(also burned into the video, so they work with the sound off)</span></summary>
+        <ol id="transcript-cues"></ol>
+      </details>
+    </div>
+  </section>
+
+  <section class="section story" aria-label="The story in three steps">
+    <div class="wrap story-grid">
+      <article class="story-card"><span class="step">01</span><h3>What the wiki believed</h3><p id="story-before"></p></article>
+      <article class="story-card"><span class="step">02</span><h3>What the new source showed</h3><p id="story-evidence"></p></article>
+      <article class="story-card accent"><span class="step">03</span><h3>What the human decided</h3><p id="story-decision"></p></article>
+    </div>
+  </section>
+
+  <section class="section band" id="flow" aria-labelledby="flow-h">
+    <div class="wrap">
+      <p class="kicker">End-to-end flow</p>
+      <h2 id="flow-h">Three phases. One human gate.</h2>
+      <p class="section-lede">Each card is an event from the recorded run record. Nothing reaches the wiki until a person has decided every proposed change.</p>
+      <div class="phases" id="phases"></div>
+    </div>
+  </section>
+
+  <section class="section" id="inputs" aria-labelledby="inputs-h">
+    <div class="wrap">
+      <p class="kicker">Inputs</p>
+      <h2 id="inputs-h">An immutable source meets an existing wiki</h2>
+      <div class="two-col">
+        <div>
+          <h3 class="sub">The raw source</h3>
+          <p class="section-lede small">Stored in <code>raw/</code>, hashed, and given to the model only as data. The highlighted text is an embedded instruction: flagged, shown to the reviewer, and acted on by nothing.</p>
+          <div class="file">
+            <div class="file-head"><span id="source-path"></span><span id="source-hash"></span></div>
+            <pre class="file-body" id="source-text" tabindex="0"></pre>
+          </div>
+          <ul class="flags" id="source-flags"></ul>
+        </div>
+        <div>
+          <h3 class="sub">The wiki before</h3>
+          <p class="section-lede small">A small linked wiki about evaluating RAG systems. Choose a page to read the file as stored.</p>
+          <div class="page-list" id="before-pages" role="group" aria-label="Pages before the ingest"></div>
+          <div class="file">
+            <div class="file-head"><span id="before-page-path"></span><span class="tag" id="before-page-status"></span></div>
+            <pre class="file-body short" id="before-page-text" tabindex="0"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" id="review" aria-labelledby="review-h">
+    <div class="wrap">
+      <p class="kicker">Human review</p>
+      <h2 id="review-h">Every proposal gets a verdict</h2>
+      <p class="section-lede" id="interpretation"></p>
+      <div class="contradiction" id="contradiction"></div>
+      <div class="changes" id="changes"></div>
+    </div>
+  </section>
+
+  <section class="section" id="before-after" aria-labelledby="ba-h">
+    <div class="wrap">
+      <p class="kicker">Revision</p>
+      <h2 id="ba-h">An existing page, narrowed — not overwritten</h2>
+      <p class="section-lede">The page now says what faithfulness does <em>not</em> measure, records the contradiction, cites both sources, and flags itself <code>needs-review</code>.</p>
+      <div class="controls">
+        <label for="ba-page">Page</label>
+        <select id="ba-page"></select>
+        <div class="seg-group" role="group" aria-label="Comparison view">
+          <button class="seg" data-view="side" aria-pressed="true">Side by side</button>
+          <button class="seg" data-view="diff" aria-pressed="false">Unified diff</button>
+        </div>
+      </div>
+      <div class="ba" id="ba"></div>
+    </div>
+  </section>
+
+  <section class="section band" id="graph" aria-labelledby="graph-h">
+    <div class="wrap">
+      <p class="kicker">Result</p>
+      <h2 id="graph-h">How the knowledge graph changed</h2>
+      <p class="section-lede">The graph shows the <em>state</em> of the wiki — pages and their links — before and after the ingest. It is the effect of the process, not the process.</p>
+      <div class="controls">
+        <div class="seg-group" role="group" aria-label="Graph state">
+          <button class="seg" data-graph="before" aria-pressed="false">Before</button>
+          <button class="seg" data-graph="after" aria-pressed="true">After</button>
+        </div>
+      </div>
+      <div class="graph-wrap">
+        <svg id="graph-svg" viewBox="0 0 900 520" role="img" aria-labelledby="graph-desc"><desc id="graph-desc"></desc></svg>
+        <ul class="legend">
+          <li><i class="dot created"></i>created page</li>
+          <li><i class="dot updated"></i>updated page</li>
+          <li><i class="dot concept"></i>concept page</li>
+          <li><i class="dot source"></i>source page</li>
+          <li><i class="line added"></i>new link</li>
+          <li><i class="line rejected"></i>proposed, rejected by human</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="audit" aria-labelledby="audit-h">
+    <div class="wrap">
+      <p class="kicker">Audit</p>
+      <h2 id="audit-h">Validated, logged, repeatable</h2>
+      <div class="two-col">
+        <div>
+          <h3 class="sub">Validation</h3>
+          <p class="section-lede small">Run before writing (preflight) and again after. Warnings are signals for a human, not failures.</p>
+          <div id="validation"></div>
+        </div>
+        <div>
+          <h3 class="sub">Log entry</h3>
+          <p class="section-lede small">Appended to <code>wiki/log.md</code> only because changes were applied. A full rejection writes nothing to the wiki.</p>
+          <pre class="file-body log" id="log-entry" tabindex="0"></pre>
+        </div>
+      </div>
+      <h3 class="sub spaced">The actual commands</h3>
+      <p class="section-lede small">Captured output of the real CLI, in order — including the repeat ingest that correctly did nothing.</p>
+      <div class="terminal" id="transcript"></div>
+    </div>
+  </section>
+
+  <section class="section band" id="whats-real" aria-labelledby="real-h">
+    <div class="wrap">
+      <p class="kicker">Transparency</p>
+      <h2 id="real-h">What is real in this demo</h2>
+      <div class="real-grid" id="real-grid"></div>
+    </div>
+  </section>
+
+  <section class="section contact" id="contact" aria-labelledby="contact-h">
+    <div class="wrap contact-grid">
+      <div>
+        <p class="kicker">Contact</p>
+        <h2 id="contact-h">Oren Salami</h2>
+        <p class="section-lede">AI systems engineering — RAG, agents, AI assurance and architecture. This lab is one of the projects in my portfolio.</p>
+      </div>
+      <ul class="contact-links">
+        <li><a href="https://nfc4u.co.il/Salami/Ai-Systems-Portfolio/" rel="noopener" target="_blank">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z M4 9h16" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="7" cy="7" r=".9" fill="currentColor"/><circle cx="9.6" cy="7" r=".9" fill="currentColor"/></svg>
+          <span><b>AI Systems Portfolio</b><small>nfc4u.co.il/Salami/Ai-Systems-Portfolio</small></span></a></li>
+        <li><a href="https://www.linkedin.com/in/oren-salami-b2988a224/" rel="noopener" target="_blank">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.5v.01M12 17v-4a2.2 2.2 0 0 1 4.4 0v4M12 10.5V17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span><b>LinkedIn</b><small>in/oren-salami-b2988a224</small></span></a></li>
+        <li><a href="https://github.com/Oren1984" rel="noopener" target="_blank">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-6-2.5M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1-.3-3.4 1.3a11.5 11.5 0 0 0-6.2 0C6.6 2.8 5.6 3.1 5.6 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4.2 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span><b>GitHub</b><small>github.com/Oren1984</small></span></a></li>
+        <li><a href="mailto:orensalmi1984@gmail.com">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span><b>Email</b><small>orensalmi1984@gmail.com</small></span></a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p id="footer-note"></p>
+    <p id="footer-music"></p>
+    <p>Reproduce locally: <code>python tools/demo.py run</code> · <code>python tools/demo.py verify</code>. Sample sources are fictional and labelled SAMPLE.</p>
+  </div>
+</footer>
+
+<script src="data/demo-run.js"></script>
+<script src="data/replay-captions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
