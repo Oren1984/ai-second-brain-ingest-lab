@@ -65,6 +65,7 @@ h3.sub.spaced { margin-top: 56px; }
 .hero h1 { font-size: clamp(2.3rem, 4.6vw, 3.45rem); font-weight: 800; letter-spacing: -.035em; }
 .grad { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .lede { font-size: 1.1rem; color: var(--text-2); max-width: 56ch; margin: 18px 0; }
+.lineage { font-size: .93rem; color: var(--muted); max-width: 60ch; margin: -6px 0 18px; }
 .disclosure { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border: 1px solid rgba(245,158,11,.35); background: rgba(245,158,11,.06); border-radius: 12px; max-width: 60ch; font-size: .93rem; color: var(--text-2); }
 .disclosure .tag-mock { flex: none; font: 700 .68rem/1 var(--mono); letter-spacing: .08em; color: #1a1204; background: var(--amber); padding: 6px 8px; border-radius: 6px; margin-top: 2px; }
 .disclosure a { color: var(--amber); }
@@ -241,6 +242,32 @@ select { font: 500 .88rem var(--sans); color: var(--text); background: var(--bg-
 .footer { border-top: 1px solid var(--border); padding: 28px 0 44px; color: var(--muted); font-size: .85rem; }
 .footer p { margin: 4px 0; }
 
+/* ---------- interaction states: one subtle hover treatment, mirrored for keyboard focus */
+.story-card, .phase, .contradiction div, .change, .vcard, .real, .contact-links a {
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.story-card:hover, .phase:hover, .contradiction div:hover, .vcard:hover, .real:hover, .change:hover, .change:focus-within {
+  border-color: var(--border-strong); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,.28);
+}
+.contradiction .was:hover { border-top-color: var(--red); }
+.contradiction .ev:hover { border-top-color: var(--blue); }
+.contradiction .now:hover { border-top-color: var(--green); }
+.story-card.accent:hover, .phase.human:hover { border-color: var(--violet); box-shadow: 0 0 0 1px rgba(139,92,246,.3), 0 0 44px rgba(139,92,246,.18), 0 10px 30px rgba(0,0,0,.28); }
+.change.edited:hover, .change.edited:focus-within { border-color: var(--violet); }
+.change.reject:hover, .change.reject:focus-within { border-color: rgba(248,113,113,.7); }
+.contact-links a:focus-visible { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(34,211,238,.08); }
+.btn:focus-visible { border-color: var(--cyan); transform: translateY(-1px); }
+.toplinks a, .mode-pill, .lineage a, .section-lede a, .music-credit a, .footer a, .disclosure a { transition: color .15s, background-color .15s, text-decoration-color .15s; }
+.toplinks a:focus-visible { color: var(--text); }
+.mode-pill:focus-visible { background: rgba(245,158,11,.18); }
+.lineage a, .section-lede a, .music-credit a, .footer a, .disclosure a { text-decoration-color: rgba(34,211,238,.45); }
+.lineage a:hover, .lineage a:focus-visible, .section-lede a:hover, .section-lede a:focus-visible,
+.music-credit a:hover, .music-credit a:focus-visible, .footer a:hover, .footer a:focus-visible { color: var(--text); text-decoration-color: currentColor; }
+.disclosure a:hover, .disclosure a:focus-visible { text-decoration-color: currentColor; }
+.lineage a:focus-visible, .section-lede a:focus-visible, .music-credit a:focus-visible, .footer a:focus-visible, .disclosure a:focus-visible { outline-offset: 2px; border-radius: 4px; }
+/* Summaries sit inside overflow-clipped boxes, so draw their focus ring inside. */
+.change > summary:focus-visible, .terminal summary:focus-visible, .transcript summary:focus-visible { outline-offset: -3px; border-radius: 10px; }
+
 /* ---------- responsive */
 @media (max-width: 960px) {
   .hero-grid { grid-template-columns: 1fr; }
@@ -263,5 +290,7 @@ select { font: 500 .88rem var(--sans); color: var(--text); background: var(--bg-
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .btn, .contact-links a { transition: none; }
+  *, *::before, *::after { transition: none !important; }
+  .btn:hover, .btn:focus-visible, .contact-links a:hover, .contact-links a:focus-visible,
+  .story-card:hover, .phase:hover, .contradiction div:hover, .vcard:hover, .real:hover, .change:hover, .change:focus-within { transform: none; }
 }
